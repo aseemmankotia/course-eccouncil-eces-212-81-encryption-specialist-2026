@@ -1,0 +1,16 @@
+## Chapter 7: Digital Signatures, X.509 Certificates, and PKI — Flashcards
+
+| # | Front (Question) | Back (Answer) |
+|---|-----------------|---------------|
+| 1 | Max validity period for publicly-trusted TLS/SSL certificates under current CA/Browser Forum baseline requirements? | 398 days maximum. Exam tip: shorter lifetimes reduce risk from key compromise; older certs historically allowed up to 3 years. |
+| 2 | SHA-256 hash output size? | 256 bits (32 bytes). Exam tip: SHA-1 (160-bit) is deprecated for signature use since 2017 — use SHA-2 or SHA-3 family. |
+| 3 | Minimum RSA key size commonly required for new certificates today? | 2048 bits. Exam tip: 1024-bit RSA is deprecated/insecure; 3072 or 4096-bit used for higher assurance needs. |
+| 4 | CRL vs OCSP — key difference? | CRL = full downloaded list of ALL revoked certs, checked periodically (can be stale/large). OCSP = real-time query about ONE specific cert's status. Exam tip: OCSP stapling removes the client-to-CA round trip and the privacy leak of direct OCSP queries. |
+| 5 | Root CA vs Intermediate CA? | Root CA is self-signed, forms the trust anchor, kept offline. Intermediate CA is signed by the root (or another intermediate) and performs day-to-day certificate issuance. Exam tip: this design limits exposure of the root private key. |
+| 6 | Digital signature vs MAC/HMAC? | Digital signature uses asymmetric keys (sign with private key, verify with public key) — provides non-repudiation. MAC uses a shared symmetric key — provides integrity/authenticity but NOT non-repudiation, since either party holding the shared key could have created it. |
+| 7 | OpenSSL command to view the fields of an X.509 certificate? | openssl x509 -in cert.pem -text -noout — Exam tip: displays Subject, Issuer, Validity, Public Key, and Signature Algorithm directly. |
+| 8 | OpenSSL command to check a certificate's OCSP revocation status? | openssl ocsp -issuer ca.pem -cert cert.pem -url http://ocsp.example.com -CAfile ca.pem — Exam tip: response is 'good', 'revoked', or 'unknown'. |
+| 9 | Correct order of operations to generate a digital signature? | 1) Hash the message (e.g., SHA-256). 2) Encrypt the resulting hash with the SENDER'S PRIVATE key. Exam tip: never encrypt the whole message with a private key for signing — always sign the hash. |
+| 10 | What is a 'trust anchor' in PKI? | The Root CA's self-signed certificate/public key, pre-installed in OS or browser trust stores. Exam tip: chain validation always terminates at a trust anchor already trusted by the relying party. |
+| 11 | DV vs OV vs EV certificates — what does each validate? | DV (Domain Validation) = proves control of the domain only, fastest/cheapest. OV (Organization Validation) = verifies legal business existence. EV (Extended Validation) = highest scrutiny, verifies legal, physical, and operational existence. Exam tip: none of these affect encryption strength, only identity assurance level. |
+| 12 | How does OCSP stapling improve on standard OCSP during a TLS handshake? | It removes the client's separate round trip to the OCSP responder because the server attaches a CA-signed, timestamped OCSP response directly to the handshake. Exam tip: also improves privacy since the CA no longer sees which sites the client is visiting. |

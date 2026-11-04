@@ -1,0 +1,16 @@
+## Chapter 9: Wi-Fi Security, VPNs, Disk Encryption, and Steganography — Flashcards
+
+| # | Front (Question) | Back (Answer) |
+|---|-----------------|---------------|
+| 1 | WEP IV length and why it's a fatal weakness? | 24-bit IV → only ~16.7 million values, reused quickly on busy networks, enabling FMS/related-key key-recovery attacks. Exam tip: WEP is broken regardless of key length (64 or 128-bit) because of the IV, not the key. |
+| 2 | What does KRACK exploit in WPA2? | Replay of message 3 in the 4-way handshake forces reinstallation of an already-used key, resetting the nonce/replay counter. Exam tip: KRACK is an implementation/protocol flaw in the handshake, not a break of AES-CCMP itself. |
+| 3 | What replaces the PSK exchange in WPA3? | SAE (Simultaneous Authentication of Equals), based on Dragonfly key exchange. Exam tip: SAE provides forward secrecy and resists offline dictionary attacks that plague WPA2-PSK. |
+| 4 | IPsec AH protocol number and what it provides? | Protocol 51. Provides integrity + authentication only — NO confidentiality/encryption. Exam tip: 'tamper-proof but not encrypted' scenario = AH. |
+| 5 | IPsec ESP protocol number and what it provides? | Protocol 50. Provides confidentiality (encryption) plus optional integrity/authentication. Exam tip: ESP is used in almost all real-world VPNs because it's the only mode with encryption. |
+| 6 | IKE default UDP ports? | UDP 500 for initial key exchange, UDP 4500 for NAT-Traversal encapsulation when a NAT device is detected. Exam tip: if a peer sits behind NAT, expect 4500 in the question. |
+| 7 | IPsec transport mode vs tunnel mode? | Transport mode encrypts only the payload; original IP header stays visible (host-to-host). Tunnel mode encrypts the entire original packet and wraps it in a new IP header (gateway-to-gateway VPNs). Exam tip: site-to-site VPN = tunnel mode. |
+| 8 | What is BitLocker and its key encryption spec? | Native Windows full-volume encryption using AES-XTS (128 or 256-bit), with keys sealed to a TPM 1.2/2.0 chip. Exam tip: BitLocker requires Windows Pro/Enterprise/Education, not Home. |
+| 9 | EFS vs BitLocker — key difference? | EFS encrypts individual files/folders tied to the user's certificate/public key; BitLocker encrypts the entire volume at the sector level. Exam tip: if the user's EFS cert/profile is lost without a recovery agent, the files are unrecoverable. |
+| 10 | Which tool supports hidden volumes for plausible deniability? | VeraCrypt (TrueCrypt's successor). Supports hidden volumes, hidden OS, and cascaded ciphers (e.g., AES-Twofish-Serpent). Exam tip: choose VeraCrypt for cross-platform needs or plausible-deniability scenarios. |
+| 11 | What does LSB steganography modify? | The least significant bit of each pixel byte (or audio sample) to embed hidden data, causing negligible perceptible change. Exam tip: LSB is the most tested steganography technique on the exam. |
+| 12 | What is a Merkle tree used for in blockchain? | Hashes transactions pairwise up to a single Merkle root, letting lightweight clients verify a transaction's inclusion via a Merkle proof without downloading the full block. Exam tip: Merkle trees enable O(log n) verification, not O(n). |
